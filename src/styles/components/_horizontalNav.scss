@@ -1,0 +1,21 @@
+.horizontal-nav {
+	background-color: black;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
+	height: 91px;
+	box-shadow: 0 4px 2px -1px gray;
+
+	.logo {
+		width: 178px;
+		height: 61px;
+	}
+
+	.navlink {
+		text-decoration: none;
+		color: white;
+		font-size: 24px;
+	}
+}
