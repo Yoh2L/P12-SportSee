@@ -1,13 +1,14 @@
 import React from "react";
 import HorizontalNav from "../components/HorizontalNav";
 import VerticalNav from "../components/VerticalNav";
-import RadialChart from "../components/RadialChart";
+import RadarChart from "../components/RadarChart";
 import ScoreChart from "../components/ScoreChart";
 import DailyActivityChart from "../components/DailyActivityChart";
 import AverageDurationChart from "../components/AverageDurationChart";
-import { USER_ACTIVITY } from "../services/Mocked";
 
 const Home = () => {
+	const id = 12;
+
 	return (
 		<div className="home">
 			<HorizontalNav />
@@ -20,11 +21,11 @@ const Home = () => {
 					</div>
 					<div className="home-charts">
 						<div className="home-charts-first-column">
-							<DailyActivityChart sessions={USER_ACTIVITY[0]} />
+							<DailyActivityChart id={id} />
 							<div className="home-charts-first-column-row-3">
-								<AverageDurationChart />
-								<RadialChart />
-								<ScoreChart />
+								<AverageDurationChart id={id} />
+								<RadarChart id={id} />
+								<ScoreChart id={id} />
 							</div>
 						</div>
 						<div className="home-charts-second-column"></div>
