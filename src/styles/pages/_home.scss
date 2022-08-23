@@ -7,7 +7,27 @@
 
 		.home-user {
 			margin-bottom: 2rem;
+			font-weight: bold;
+			margin-bottom: 3rem;
+
+			.home-user-hello {
+				font-size: 48px;
+			}
+			.home-user-firstname {
+				font-size: 48px;
+				color: red;
+			}
+			.home-user-greetings {
+				font-size: 18px;
+				font-weight: 400;
+			}
 		}
+	}
+
+	.home-charts {
+		display: flex;
+		flex-direction: row;
+		gap: 1.5rem;
 	}
 
 	.home-charts-first-column {

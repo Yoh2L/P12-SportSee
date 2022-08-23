@@ -36,8 +36,6 @@ const ScoreChart = (userId) => {
 		);
 	};
 
-	console.log(Score);
-
 	return (
 		<div className="score-chart">
 			<ResponsiveContainer width="100%" height="100%">
