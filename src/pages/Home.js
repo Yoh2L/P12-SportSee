@@ -10,7 +10,7 @@ import AverageDurationChart from "../components/AverageDurationChart";
 import Macronutrient from "../components/Macronutrient";
 
 const Home = () => {
-	const id = 12;
+	const id = 18;
 
 	const userIndex = USER_MAIN_DATA.findIndex((obj) => {
 		return obj.id === id;

@@ -5,8 +5,8 @@
 	align-items: center;
 	width: 117px;
 	background-color: black;
-	height: calc(100vh - 91px);
 	gap: 1rem;
+	height: calc(100vh - 91px);
 
 	.vertical-icon {
 		height: 64px;
@@ -18,7 +18,14 @@
 		color: white;
 		transform: rotate(-90deg);
 		width: max-content;
-		bottom: 100px;
+		bottom: 80px;
 		font-size: 12px;
+	}
+}
+
+@media screen and (min-width: 1023px) and (max-width: 1439px) {
+	.vertical-nav {
+		height: 1406px;
+		justify-content: flex-start;
 	}
 }

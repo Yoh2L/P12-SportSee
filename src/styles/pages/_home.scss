@@ -1,9 +1,16 @@
+.home {
+	height: 100%;
+}
+
 .home-body {
 	display: flex;
+	flex-direction: row;
+	height: 100%;
 
 	.home-content {
-		padding: 3rem;
-		width: 1126px;
+		padding: 2rem;
+		max-width: 1126px;
+		width: 100%;
 
 		.home-user {
 			margin-bottom: 2rem;
@@ -28,17 +35,31 @@
 		display: flex;
 		flex-direction: row;
 		gap: 1.5rem;
+		width: 100%;
 	}
 
 	.home-charts-first-column {
 		display: flex;
 		flex-direction: column;
 		gap: 1.5rem;
+		width: 100%;
 	}
 
 	.home-charts-first-column-row-3 {
 		display: flex;
 		flex-direction: row;
 		gap: 2rem;
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: 1023px) and (max-width: 1439px) {
+	.home-charts-first-column {
+		width: 60%;
+	}
+
+	.home-charts-first-column-row-3 {
+		width: 60%;
+		flex-wrap: wrap;
 	}
 }

@@ -28,3 +28,10 @@
 		opacity: 0.8;
 	}
 }
+
+@media screen and (min-width: 1023px) and (max-width: 1439px) {
+	.macronutrient {
+		justify-content: flex-start;
+		gap: 2.3rem;
+	}
+}
