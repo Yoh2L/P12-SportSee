@@ -1,5 +1,5 @@
 import React from "react";
-import API from "../services/Api";
+import formatData from "../services/FormatData";
 import { USER_MAIN_DATA } from "../services/Mocked";
 import HorizontalNav from "../components/HorizontalNav";
 import VerticalNav from "../components/VerticalNav";

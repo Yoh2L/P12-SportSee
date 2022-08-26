@@ -1,5 +1,5 @@
 import React from "react";
-import API from "../services/Api";
+import formatData from "../services/FormatData";
 import { USER_AVERAGE_SESSIONS } from "../services/Mocked";
 import {
 	LineChart,
@@ -16,6 +16,10 @@ const AverageDurationChart = (userId) => {
 
 	api.getAverageSessions(12).then((data) => console.log(data)); */
 
+	const tata = [];
+	formatData(userId.id, tata);
+	console.log(tata);
+
 	const userIndex = USER_AVERAGE_SESSIONS.findIndex((obj) => {
 		return obj.userId === userId.id;
 	});
@@ -31,6 +35,8 @@ const AverageDurationChart = (userId) => {
 			sessionLength: session.sessionLength,
 		});
 	});
+
+	console.log(sessions);
 
 	const Title = () => {
 		return <div className="average-title">Durée moyenne des sessions</div>;

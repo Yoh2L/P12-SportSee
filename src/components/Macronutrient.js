@@ -7,10 +7,6 @@ import carbsIcon from "../assets/carbs-icon.png";
 import fatIcon from "../assets/fat-icon.png";
 
 const Macronutrient = (userId) => {
-	/* 	const api = new API();
-
-	api.getAverageSessions(12).then((data) => console.log(data)); */
-
 	const userIndex = USER_MAIN_DATA.findIndex((obj) => {
 		return obj.id === userId.id;
 	});
