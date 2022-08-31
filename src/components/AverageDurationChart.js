@@ -1,6 +1,6 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import formatData from "../services/FormatData";
-import { USER_AVERAGE_SESSIONS } from "../services/Mocked";
 import {
 	LineChart,
 	Line,
@@ -12,31 +12,19 @@ import {
 } from "recharts";
 
 const AverageDurationChart = (userId) => {
-	/* 	const api = new API();
+	const [datas, setDatas] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-	api.getAverageSessions(12).then((data) => console.log(data)); */
+	useEffect(() => {
+		async function fetchDatas() {
+			const newDatas = await formatData(userId.id);
+			setDatas(newDatas);
+		}
+		fetchDatas();
+		setIsLoading(false);
+	}, [isLoading]);
 
-	const tata = [];
-	formatData(userId.id, tata);
-	console.log(tata);
-
-	const userIndex = USER_AVERAGE_SESSIONS.findIndex((obj) => {
-		return obj.userId === userId.id;
-	});
-
-	const userData = USER_AVERAGE_SESSIONS[userIndex].sessions;
-
-	const days = ["L", "M", "M", "J", "V", "S", "D"];
-	const sessions = [];
-
-	userData.forEach((session) => {
-		sessions.push({
-			name: days[session.day - 1],
-			sessionLength: session.sessionLength,
-		});
-	});
-
-	console.log(sessions);
+	console.log(datas);
 
 	const Title = () => {
 		return <div className="average-title">Durée moyenne des sessions</div>;
@@ -53,41 +41,45 @@ const AverageDurationChart = (userId) => {
 
 		return null;
 	};
-
 	return (
-		<div className="average-session">
-			<ResponsiveContainer width="100%" height="100%">
-				{
-					<LineChart
-						width={500}
-						height={300}
-						data={sessions}
-						margin={{
-							top: 20,
-							right: 15,
-							left: 15,
-							bottom: 15,
-						}}
-					>
-						<XAxis
-							dataKey="name"
-							stroke={""}
-							tick={{ fill: "#ffffff", fontWeight: 500, fontSize: 14 }}
-						/>
-						<YAxis hide={true} />
-						<Line
-							type="monotone"
-							dataKey="sessionLength"
-							stroke="#FFFFFF"
-							dot={false}
-							strokeWidth={2}
-						/>
-						<Tooltip content={<CustomizedTooltip />} cursor={false} />
-						<Legend verticalAlign="top" align="left" content={Title} />
-					</LineChart>
-				}
-			</ResponsiveContainer>
-		</div>
+		<>
+			{isLoading && <div>Loading</div>}
+			{!isLoading && (
+				<div className="average-session">
+					<ResponsiveContainer width="100%" height="100%">
+						{
+							<LineChart
+								width={500}
+								height={300}
+								data={datas}
+								margin={{
+									top: 20,
+									right: 15,
+									left: 15,
+									bottom: 15,
+								}}
+							>
+								<XAxis
+									dataKey="name"
+									stroke={""}
+									tick={{ fill: "#ffffff", fontWeight: 500, fontSize: 14 }}
+								/>
+								<YAxis hide={true} />
+								<Line
+									type="monotone"
+									dataKey="sessionLength"
+									stroke="#FFFFFF"
+									dot={false}
+									strokeWidth={2}
+								/>
+								<Tooltip content={<CustomizedTooltip />} cursor={false} />
+								<Legend verticalAlign="top" align="left" content={Title} />
+							</LineChart>
+						}
+					</ResponsiveContainer>
+				</div>
+			)}
+		</>
 	);
 };
 

@@ -1,22 +1,24 @@
 import API from "../services/Api";
 
-export default async function formatData(id, tata) {
+export default async function formatData(id) {
 	const api = new API();
 
-	const titi = await api.getAverageSessions(id).then((data) => {
+	const response = await api.getAverageSessions(id).then((data) => {
 		return data;
 	});
 
+	let results = [];
+
 	const days = ["L", "M", "M", "J", "V", "S", "D"];
 
-	const toto = titi.data.sessions;
+	const sessions = response.data.sessions;
 
-	toto.forEach((session) => {
-		tata.push({
+	sessions.forEach((session) => {
+		results.push({
 			name: days[session.day - 1],
 			sessionLength: session.sessionLength,
 		});
 	});
-	console.log(tata);
-	return tata;
+	console.log(results);
+	return results;
 }
