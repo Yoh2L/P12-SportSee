@@ -1,6 +1,5 @@
-import React from "react";
-import formatData from "../services/FormatData";
-import { USER_MAIN_DATA } from "../services/Mocked";
+import React, { useEffect, useState } from "react";
+import { getUserData } from "../services/FormatData";
 import HorizontalNav from "../components/HorizontalNav";
 import VerticalNav from "../components/VerticalNav";
 import RadarChart from "../components/RadarChart";
@@ -10,13 +9,19 @@ import AverageDurationChart from "../components/AverageDurationChart";
 import Macronutrient from "../components/Macronutrient";
 
 const Home = () => {
-	const id = 12;
+	const id = 18;
 
-	const userIndex = USER_MAIN_DATA.findIndex((obj) => {
-		return obj.id === id;
-	});
+	const [datas, setDatas] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-	const userData = USER_MAIN_DATA[userIndex].userInfos;
+	useEffect(() => {
+		async function fetchDatas() {
+			const newDatas = await getUserData(id);
+			setDatas(newDatas);
+		}
+		fetchDatas();
+		setIsLoading(false);
+	}, [isLoading]);
 
 	return (
 		<div className="home">
@@ -26,7 +31,7 @@ const Home = () => {
 				<div className="home-content">
 					<div className="home-user">
 						<span className="home-user-hello">Bonjour </span>
-						<span className="home-user-firstname">{userData.firstName}</span>
+						<span className="home-user-firstname">{datas.firstName}</span>
 						<br />
 						<br />
 						<span className="home-user-greetings">

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import formatData from "../services/FormatData";
+import { getAverageChartData } from "../services/FormatData";
 import {
 	LineChart,
 	Line,
@@ -17,14 +17,12 @@ const AverageDurationChart = (userId) => {
 
 	useEffect(() => {
 		async function fetchDatas() {
-			const newDatas = await formatData(userId.id);
+			const newDatas = await getAverageChartData(userId.id);
 			setDatas(newDatas);
 		}
 		fetchDatas();
 		setIsLoading(false);
 	}, [isLoading]);
-
-	console.log(datas);
 
 	const Title = () => {
 		return <div className="average-title">Durée moyenne des sessions</div>;

@@ -1,6 +1,6 @@
-import React from "react";
-import API from "../services/Api";
-import { USER_MAIN_DATA } from "../services/Mocked";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
+import { getScoreData } from "../services/FormatData";
 import {
 	RadialBarChart,
 	RadialBar,
@@ -10,68 +10,84 @@ import {
 } from "recharts";
 
 const ScoreChart = (userId) => {
-	/* 	const api = new API();
+	const [datas, setDatas] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-	api.getAverageSessions(12).then((data) => console.log(data)); */
+	useEffect(() => {
+		async function fetchDatas() {
+			const newDatas = await getScoreData(userId.id);
+			setDatas(newDatas);
+		}
+		fetchDatas();
+		setIsLoading(false);
+	}, [isLoading]);
 
-	const userIndex = USER_MAIN_DATA.findIndex((obj) => {
-		return obj.id === userId.id;
-	});
-
-	const userData = USER_MAIN_DATA[userIndex].todayScore;
-
-	const Score = [
+	const score = [
 		{
-			uv: userData * 100,
+			uv: datas * 100,
 			fill: "#ff0000",
 		},
 	];
 
 	const ScoreLegend = () => {
 		return (
-			<div className="score-legend">
-				<div className="score-legend-score">{userData * 100}%</div>
-				<div className="score-legend-text">de votre objectif</div>
-			</div>
+			<>
+				{isLoading && <div>Loading</div>}
+				{!isLoading && (
+					<div className="score-legend">
+						<div className="score-legend-score">{datas * 100}%</div>
+						<div className="score-legend-text">de votre objectif</div>
+					</div>
+				)}
+			</>
 		);
 	};
 
 	return (
-		<div className="score-chart">
-			<ResponsiveContainer width="100%" height="100%">
-				<RadialBarChart
-					innerRadius={80}
-					outerRadius={260}
-					barSize={10}
-					startAngle={-270}
-					endAngle={90}
-					data={Score}
-				>
-					<circle cx="50%" cy="50%" fill="white" r="80"></circle>
-					<PolarAngleAxis
-						type="number"
-						domain={[0, 100]}
-						angleAxisId={0}
-						tick={false}
-					/>
-					<RadialBar
-						background={{ fill: "#fbfbfb" }}
-						dataKey="uv"
-						cornerRadius="10"
-					/>
-					<Legend verticalAlign="middle" align="center" content={ScoreLegend} />
-					<text
-						className="graphTitle"
-						x="5%"
-						y="10%"
-						dominantBaseline="middle"
-						style={{ fontWeight: 700, fontSize: 16 }}
-					>
-						Score
-					</text>
-				</RadialBarChart>
-			</ResponsiveContainer>
-		</div>
+		<>
+			{isLoading && <div>Loading</div>}
+			{!isLoading && (
+				<div className="score-chart">
+					<ResponsiveContainer width="100%" height="100%">
+						<RadialBarChart
+							innerRadius={80}
+							outerRadius={260}
+							barSize={10}
+							startAngle={-270}
+							endAngle={90}
+							data={score}
+						>
+							<circle cx="50%" cy="50%" fill="white" r="80"></circle>
+							<PolarAngleAxis
+								type="number"
+								domain={[0, 100]}
+								angleAxisId={0}
+								tick={false}
+							/>
+							<RadialBar
+								background={{ fill: "#fbfbfb" }}
+								dataKey="uv"
+								cornerRadius="10"
+							/>
+							<Legend
+								verticalAlign="middle"
+								align="center"
+								content={ScoreLegend}
+							/>
+							<text
+								className="graphTitle"
+								x="5%"
+								y="10%"
+								dominantBaseline="middle"
+								style={{ fontWeight: 700, fontSize: 16 }}
+							>
+								Score
+							</text>
+						</RadialBarChart>
+					</ResponsiveContainer>
+				</div>
+			)}
+		</>
 	);
 };
 
