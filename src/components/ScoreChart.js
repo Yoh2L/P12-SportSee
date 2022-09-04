@@ -10,7 +10,7 @@ import {
 } from "recharts";
 
 const ScoreChart = (userId) => {
-	const [datas, setDatas] = useState([]);
+	const [datas, setDatas] = useState();
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -33,7 +33,7 @@ const ScoreChart = (userId) => {
 		return (
 			<>
 				{isLoading && <div>Loading</div>}
-				{!isLoading && (
+				{!isLoading && datas && (
 					<div className="score-legend">
 						<div className="score-legend-score">{datas * 100}%</div>
 						<div className="score-legend-text">de votre objectif</div>
@@ -46,7 +46,7 @@ const ScoreChart = (userId) => {
 	return (
 		<>
 			{isLoading && <div>Loading</div>}
-			{!isLoading && (
+			{!isLoading && score && (
 				<div className="score-chart">
 					<ResponsiveContainer width="100%" height="100%">
 						<RadialBarChart

@@ -1,6 +1,8 @@
 import axios from "axios";
 
-/**Fetch API class */
+/**
+ * @file Fetch API class using axios
+ * */
 
 export default class API {
 	constructor() {
