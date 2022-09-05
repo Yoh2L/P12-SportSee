@@ -12,6 +12,11 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
+/**
+ * @file React component :daily activity bar chart
+ * @returns {JSX}
+ */
+
 const DailyActivityChart = (userId) => {
 	const [datas, setDatas] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);

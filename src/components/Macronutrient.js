@@ -6,6 +6,11 @@ import proteinIcon from "../assets/protein-icon.png";
 import carbsIcon from "../assets/carbs-icon.png";
 import fatIcon from "../assets/fat-icon.png";
 
+/**
+ * @file React component : macronutrients and  calories display
+ * @returns {JSX}
+ */
+
 const Macronutrient = (userId) => {
 	const [datas, setDatas] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);

@@ -11,6 +11,11 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
+/**
+ * @file React component : average duration line chart
+ * @returns {JSX}
+ */
+
 const AverageDurationChart = (userId) => {
 	const [datas, setDatas] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);

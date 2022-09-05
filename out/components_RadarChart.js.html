@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: services/Api.js</title>
+    <title>JSDoc: Source: components/RadarChart.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: services/Api.js</h1>
+    <h1 class="page-title">Source: components/RadarChart.js</h1>
 
     
 
@@ -26,56 +26,60 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import axios from "axios";
+            <pre class="prettyprint source linenums"><code>/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
+import { getRadarData } from "../services/FormatData";
+import {
+	Radar,
+	RadarChart,
+	PolarGrid,
+	PolarAngleAxis,
+	ResponsiveContainer,
+} from "recharts";
 
 /**
- * @file Fetch API class using axios
- * */
+ * @file React component : radar chart
+ * @returns {JSX}
+ */
 
-export default class API {
-	constructor() {
-		/**API Adress
-		 * @type {string}
-		 */
-		this.endpoint = "http://localhost:3000";
-	}
-	/**
-	 * Fetch user datas
-	 * @param {number} id of user
-	 * @returns {object}
-	 */
-	async getUser(id) {
-		const res = await axios.get(`${this.endpoint}/user/${id}`);
-		return res.data;
-	}
-	/**
-	 * Fetch average sessions datas
-	 * @param {number} id
-	 * @returns {object}
-	 */
-	async getAverageSessions(id) {
-		const res = await axios.get(`${this.endpoint}/user/${id}/average-sessions`);
-		return res.data;
-	}
-	/**
-	 * Fetch activity datas
-	 * @param {number} id
-	 * @returns {object}
-	 */
-	async getActivity(id) {
-		const res = await axios.get(`http://localhost:3000/user/${id}/activity`);
-		return res.data;
-	}
-	/**
-	 * Fetch performances datas
-	 * @param {number} id
-	 * @returns {object}
-	 */
-	async getPerformance(id) {
-		const res = await axios.get(`http://localhost:3000/user/${id}/performance`);
-		return res.data;
-	}
-}
+const Chart = (userId) => {
+	const [datas, setDatas] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		async function fetchDatas() {
+			const newDatas = await getRadarData(userId.id);
+			setDatas(newDatas);
+		}
+		fetchDatas();
+		setIsLoading(false);
+	}, [isLoading]);
+
+	return (
+		&lt;>
+			{isLoading &amp;&amp; &lt;div>Loading&lt;/div>}
+			{!isLoading &amp;&amp; (
+				&lt;div className="radar-chart">
+					&lt;ResponsiveContainer width="100%" height="100%">
+						&lt;RadarChart cx="50%" cy="50%" outerRadius="70" data={datas}>
+							&lt;PolarGrid radialLines={false} />
+							&lt;PolarAngleAxis dataKey="kind" />
+							&lt;Radar
+								name="Mike"
+								dataKey="value"
+								stroke="#FF0101"
+								fill="#FF0101"
+								fillOpacity={0.6}
+							/>
+						&lt;/RadarChart>
+					&lt;/ResponsiveContainer>
+				&lt;/div>
+			)}
+		&lt;/>
+	);
+};
+
+export default Chart;
 </code></pre>
         </article>
     </section>

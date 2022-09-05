@@ -9,6 +9,11 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
+/**
+ * @file React component : radar chart
+ * @returns {JSX}
+ */
+
 const Chart = (userId) => {
 	const [datas, setDatas] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);

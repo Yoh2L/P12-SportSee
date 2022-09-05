@@ -9,6 +9,11 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
+/**
+ * @file React component : score radial bar chart
+ * @returns {JSX}
+ */
+
 const ScoreChart = (userId) => {
 	const [datas, setDatas] = useState();
 	const [isLoading, setIsLoading] = useState(true);
