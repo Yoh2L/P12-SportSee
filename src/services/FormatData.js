@@ -5,7 +5,7 @@ import API from "../services/Api";
 /**
  * import and format data for the average duration chart
  * @param {number} id
- * @returns {array<object>}
+ * @returns {Array<object>} Each objects contains name and session's length
  */
 export async function getAverageChartData(id) {
 	/**
@@ -17,11 +17,7 @@ export async function getAverageChartData(id) {
 	 * @param {number} id
 	 */
 	const response = await api.getAverageSessions(id);
-	/**
-	 * Empty array, will be return with the datas for the chart
-	 * @type {Array}
-	 */
-	let results = [];
+
 	/**
 	 * Array contains each days
 	 * @type {Array<letters>}
@@ -29,13 +25,20 @@ export async function getAverageChartData(id) {
 	const days = ["L", "M", "M", "J", "V", "S", "D"];
 
 	const sessions = response.data.sessions;
-
+	/**
+	 * Push the datas in an array.
+	 * @type {Array<object>}
+	 * @param name: days {string}
+	 * @param sessionLength: duration {numbers}
+	 */
+	let results = [];
 	sessions.forEach((session) => {
 		results.push({
 			name: days[session.day - 1],
 			sessionLength: session.sessionLength,
 		});
 	});
+
 	return results;
 }
 
@@ -57,8 +60,11 @@ export async function getDailyActivityData(id) {
 
 	const userData = response.data.sessions;
 	/**
-	 *
-	 * @type {array<object>}
+	 * Map the datas in an array.
+	 * @type {Array<object>}
+	 * @param kilogram: kilogram {numbers}
+	 * @param calories: calories {numbers}
+	 * @param day: day number {number}
 	 */
 	let userDataDisplay = userData.map(({ kilogram, calories }, index) => {
 		return {
@@ -73,7 +79,7 @@ export async function getDailyActivityData(id) {
 /**
  * import and format data for the radar chart
  * @param {number} id
- * @returns {array<object>}
+ * @returns {Array<object>}
  */
 export async function getRadarData(id) {
 	const api = new API();
@@ -86,15 +92,18 @@ export async function getRadarData(id) {
 	 * @type {Kind<array>}
 	 */
 	const Kind = [
-		"cardio",
-		"energy",
-		"endurance",
-		"strength",
-		"speed",
-		"intensity",
+		"Cardio",
+		"Energie",
+		"Endurance",
+		"Force",
+		"Vitesse",
+		"Intensité",
 	];
 	/**
+	 * Map datas in an array.
 	 * @type {array<object>}
+	 * @param value: performance score {numbers}
+	 * @param kind: kind type {string}
 	 */
 	let stat = userData.map(({ value, kind }) => {
 		return {
@@ -108,13 +117,15 @@ export async function getRadarData(id) {
 /**
  * import and format data for the score chart
  * @param {number} id
- * @returns {array<object>}
+ * @returns {number}
  */
 export async function getScoreData(id) {
 	const api = new API();
 
 	const response = await api.getUser(id);
-
+	/**
+	 * Due to back-end error there's two possible keys : todayScore or score.
+	 */
 	const userData = response.data.todayScore || response.data.score;
 	return userData;
 }
@@ -128,7 +139,13 @@ export async function getMacronutrientData(id) {
 	const api = new API();
 
 	const response = await api.getUser(id);
-
+	/**
+	 * Get macronutrients datas
+	 * @param calorieCount: {numbers}
+	 * @param carbohydrateCount: Glucides {numbers}
+	 * @param lipidCount: Lipides {numbers}
+	 * @param proteinCount: Proteins {numbers}
+	 */
 	const userData = response.data.keyData;
 	return userData;
 }
@@ -142,7 +159,12 @@ export async function getUserData(id) {
 	const api = new API();
 
 	const response = await api.getUser(id);
-
+	/**
+	 * Get user datas
+	 * @param age: age {number}
+	 * @param firstName: first name {string}
+	 * @param lastName: last name {string}
+	 */
 	const userData = response.data.userInfos;
 	return userData;
 }

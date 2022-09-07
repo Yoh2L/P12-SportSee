@@ -10,7 +10,8 @@ import Macronutrient from "../components/Macronutrient";
 
 /**
  * @file React component for the main page of the app
- * @returns {JSX} Main page components
+ * Render the whole page and call the charts components
+ * @returns {JSX.Element} Main page components
  */
 
 const Home = () => {
@@ -21,14 +22,17 @@ const Home = () => {
 	const id = 18;
 
 	const [datas, setDatas] = useState([]);
-	/**
-	 * useState use to prevent early empty loading of components
-	 */
 	const [isLoading, setIsLoading] = useState(true);
 
 	/**
 	 * call the getUserData fonction
 	 * @param {number} id
+	 */
+	/**
+	 *  useEffect to perform side effects
+	 *  call the import datas function
+	 * @param {id}
+	 * @returns {object}
 	 */
 	useEffect(() => {
 		async function fetchDatas() {

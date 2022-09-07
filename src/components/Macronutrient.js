@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { getMacronutrientData } from "../services/FormatData";
 import calorieIcon from "../assets/calories-icon.png";
 import proteinIcon from "../assets/protein-icon.png";
@@ -7,8 +8,9 @@ import carbsIcon from "../assets/carbs-icon.png";
 import fatIcon from "../assets/fat-icon.png";
 
 /**
- * @file React component : macronutrients and  calories display
- * @returns {JSX}
+ * @component React component : render the macronutrients and calories
+ * @param {number} userId
+ * @returns {JSX.Element}
  */
 
 const Macronutrient = (userId) => {
@@ -17,6 +19,11 @@ const Macronutrient = (userId) => {
 
 	useEffect(() => {
 		async function fetchDatas() {
+			/**
+			 * Call the import and format function
+			 * @param {number} userId
+			 * @return {object} Average sessions datas (sessions, kg and calories)
+			 */
 			const newDatas = await getMacronutrientData(userId.id);
 			setDatas(newDatas);
 		}
@@ -86,4 +93,9 @@ const Macronutrient = (userId) => {
 		</>
 	);
 };
+
+Macronutrient.propTypes = {
+	id: PropTypes.number.isRequired,
+};
+
 export default Macronutrient;

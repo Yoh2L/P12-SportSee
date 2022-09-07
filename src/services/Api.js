@@ -17,7 +17,11 @@ export default class API {
 	 * @returns {object}
 	 */
 	async getUser(id) {
-		const res = await axios.get(`${this.endpoint}/user/${id}`);
+		const res = await axios
+			.get(`${this.endpoint}/user/${id}`)
+			.catch((err) =>
+				alert("Erreur 503 : The server is currently unavailable.")
+			);
 		return res.data;
 	}
 	/**

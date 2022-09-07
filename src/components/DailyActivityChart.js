@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { getDailyActivityData } from "../services/FormatData";
 import {
 	BarChart,
@@ -13,8 +14,9 @@ import {
 } from "recharts";
 
 /**
- * @file React component :daily activity bar chart
- * @returns {JSX}
+ * @component React component : daily activity chart
+ * @param {number} userId
+ * @returns {JSX.Element}
  */
 
 const DailyActivityChart = (userId) => {
@@ -23,6 +25,11 @@ const DailyActivityChart = (userId) => {
 
 	useEffect(() => {
 		async function fetchDatas() {
+			/**
+			 * Call the import and format function
+			 * @param {number} id
+			 * @return {Array<object>} Daily activity datas (sessions, kg and calories)
+			 */
 			const newDatas = await getDailyActivityData(userId.id);
 			setDatas(newDatas);
 		}
@@ -30,6 +37,11 @@ const DailyActivityChart = (userId) => {
 		setIsLoading(false);
 	}, [isLoading]);
 
+	/**
+	 * @param {boolean}  [Props.active='true']
+	 * @param {array}   [Props.payload=[]]
+	 * @returns an active tooltip
+	 */
 	const CustomTooltip = ({ active, payload }) => {
 		if (active && payload && payload.length) {
 			return (
@@ -39,8 +51,12 @@ const DailyActivityChart = (userId) => {
 				</div>
 			);
 		}
-
 		return null;
+	};
+
+	CustomTooltip.propTypes = {
+		active: PropTypes.bool,
+		payload: PropTypes.array,
 	};
 
 	return (
@@ -140,6 +156,10 @@ const DailyActivityChart = (userId) => {
 			)}
 		</>
 	);
+};
+
+DailyActivityChart.propTypes = {
+	id: PropTypes.number.isRequired,
 };
 
 export default DailyActivityChart;

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { getScoreData } from "../services/FormatData";
 import {
 	RadialBarChart,
@@ -10,8 +11,10 @@ import {
 } from "recharts";
 
 /**
- * @file React component : score radial bar chart
- * @returns {JSX}
+ *
+ * @component Display user's score chart
+ * @param {number} score  user score
+ * @returns {JSX.Element} ScoreGraph component
  */
 
 const ScoreChart = (userId) => {
@@ -20,6 +23,11 @@ const ScoreChart = (userId) => {
 
 	useEffect(() => {
 		async function fetchDatas() {
+			/**
+			 * Call the import and format function
+			 * @param {number} id
+			 * @return {Array<object>} Average sessions datas (days and duration)
+			 */
 			const newDatas = await getScoreData(userId.id);
 			setDatas(newDatas);
 		}
@@ -27,6 +35,9 @@ const ScoreChart = (userId) => {
 		setIsLoading(false);
 	}, [isLoading]);
 
+	/**
+	 * Score has to be in % so datas are multiplied by 100
+	 */
 	const score = [
 		{
 			uv: datas * 100,
@@ -34,6 +45,9 @@ const ScoreChart = (userId) => {
 		},
 	];
 
+	/**
+	 * @returns {JSX.Element} Graph's legend
+	 */
 	const ScoreLegend = () => {
 		return (
 			<>
@@ -94,6 +108,10 @@ const ScoreChart = (userId) => {
 			)}
 		</>
 	);
+};
+
+ScoreChart.propTypes = {
+	id: PropTypes.number.isRequired,
 };
 
 export default ScoreChart;

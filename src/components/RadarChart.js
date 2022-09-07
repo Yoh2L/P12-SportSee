@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { getRadarData } from "../services/FormatData";
 import {
 	Radar,
@@ -20,6 +21,11 @@ const Chart = (userId) => {
 
 	useEffect(() => {
 		async function fetchDatas() {
+			/**
+			 * Call the import and format function
+			 * @param {number} id
+			 * @return {Array<object>} Radar datas (kinds and values)
+			 */
 			const newDatas = await getRadarData(userId.id);
 			setDatas(newDatas);
 		}
@@ -49,6 +55,10 @@ const Chart = (userId) => {
 			)}
 		</>
 	);
+};
+
+Chart.propTypes = {
+	id: PropTypes.number.isRequired,
 };
 
 export default Chart;
